@@ -216,6 +216,36 @@
       </tags>
   </entry>
   <entry>
+    <title>如何封装Framework静态库</title>
+    <url>/2019/10/13/%E5%A6%82%E4%BD%95%E5%B0%81%E8%A3%85%20Framework%20%E9%9D%99%E6%80%81%E5%BA%93/</url>
+    <content><![CDATA[<p>工作中使用的第三方SDK基本上都是闭源的，因为公司不能把自己的机密泄露出去。所以当需要给别人提供SDK但不让他们知道代码的实现时就需要封装成静态库</p>
+<p>静态库有<code>.a</code>库和<code>.framework</code>库，苹果官方更建议我们使用<code>.framework</code>库，因为其更加强大</p>
+<blockquote>
+<p>.a是一个纯二进制文件，.framework中除了有二进制文件之外还有资源文件<br>.a文件不能直接使用，至少要有.h文件配合，.framework文件可以直接使用<br>.a + .h + sourceFile = .framework</p>
+</blockquote>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p>参考这篇博客： <a href="http://www.cocoachina.com/articles/11022" target="_blank" rel="noopener">iOS开发——创建你自己的Framework</a> 讲解的非常详细</p>
+<p>总结一下步骤：</p>
+<ol>
+<li>创建工程，最好是起名为xxxDemo例如AXKitDemo，然后新建一个target名为AXKit，并把原来的工程改名为AXKit（为了方便在demo中调试静态库）</li>
+<li>新建一个target，选择类型为framework</li>
+<li>在framework中创建需要封装的类，写好代码</li>
+<li>在<code>Build Setting</code>里更改参数，<code>Math-O Type</code>为<code>Static Library</code></li>
+<li>在<code>Build Phases -&gt; Headers</code>里将需要暴露出来的头文件从<code>Project</code>移动到<code>Public</code></li>
+<li>添加一个<code>Aggregate</code>的target，并添加运行脚本。目的是把编译出来的真机版和模拟器版的framework合并</li>
+<li>模拟器编译一下，真机编译一下，然后<code>Aggregate</code>编译一下，然后在项目的<code>Products</code>文件夹里就有了最终生成的静态库</li>
+</ol>
+<p><code>Aggregate</code>的Run Script脚本：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="string">"$&#123;ACTION&#125;"</span> = <span class="string">"build"</span> ]</span></pre></td></tr><tr><td class="code"><pre><span class="line">then</span></pre></td></tr><tr><td class="code"><pre><span class="line">INSTALL_DIR=$&#123;SRCROOT&#125;/Products/$&#123;PROJECT_NAME&#125;.framework</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">DEVICE_DIR=$&#123;BUILD_ROOT&#125;/$&#123;CONFIGURATION&#125;-iphoneos/$&#123;PROJECT_NAME&#125;.framework</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">SIMULATOR_DIR=$&#123;BUILD_ROOT&#125;/$&#123;CONFIGURATION&#125;-iphonesimulator/$&#123;PROJECT_NAME&#125;.framework</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [ -d <span class="string">"$&#123;INSTALL_DIR&#125;"</span> ]</span></pre></td></tr><tr><td class="code"><pre><span class="line">then</span></pre></td></tr><tr><td class="code"><pre><span class="line">rm -rf <span class="string">"$&#123;INSTALL_DIR&#125;"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">fi</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">mkdir -p <span class="string">"$&#123;INSTALL_DIR&#125;"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">cp -R <span class="string">"$&#123;DEVICE_DIR&#125;/"</span> <span class="string">"$&#123;INSTALL_DIR&#125;/"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">#ditto "$&#123;DEVICE_DIR&#125;/Headers" "$&#123;INSTALL_DIR&#125;/Headers"</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">lipo -create <span class="string">"$&#123;DEVICE_DIR&#125;/$&#123;PROJECT_NAME&#125;"</span> <span class="string">"$&#123;SIMULATOR_DIR&#125;/$&#123;PROJECT_NAME&#125;"</span> -output <span class="string">"$&#123;INSTALL_DIR&#125;/$&#123;PROJECT_NAME&#125;"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">#open "$&#123;DEVICE_DIR&#125;"</span></pre></td></tr><tr><td class="code"><pre><span class="line">#open "$&#123;SRCROOT&#125;/Products"</span></pre></td></tr><tr><td class="code"><pre><span class="line">fi</span></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Framework静态库</category>
+      </categories>
+      <tags>
+        <tag>OC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>iOS底层原理总结 - 探寻OC对象的本质</title>
     <url>/2018/07/17/iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E6%80%BB%E7%BB%93%20-%20%E6%8E%A2%E5%AF%BBOC%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%9C%AC%E8%B4%A8/</url>
     <content><![CDATA[<p>转载自：<a href="https://www.jianshu.com/p/91a9176851cd" target="_blank" rel="noopener">iOS底层原理总结</a></p>

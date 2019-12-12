@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>关于 | Bondi_blue</title>
+  <title>如何封装Framework静态库 | Bondi_blue</title>
   
   
   <meta name="description" content="Colin的个人博客">
@@ -48,7 +48,7 @@
   
   
   <div class="cover-wrapper">
-    <cover class='cover page half'>
+    <cover class='cover post half'>
       
         
   <h1 class='title'>Bondiblue</h1>
@@ -111,7 +111,7 @@
 
       
     </cover>
-    <header class="l_header no_sidebar pure">
+    <header class="l_header pure">
   <div id="loading-bar-wrapper">
     <div id="loading-bar" class="pure"></div>
   </div>
@@ -193,6 +193,8 @@
 			<a class="logo flat-box"></a>
 			<ul class='switcher h-list'>
 				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
         
 			</ul>
 		</div>
@@ -278,10 +280,10 @@
 
   <div class="l_body">
     <div class='body-wrapper'>
-      <div class='l_main no_sidebar'>
+      <div class='l_main'>
   
 
-  <article id="page" class="post white-box article-type-page" itemscope itemprop="blogPost">
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
     
 
 
@@ -293,8 +295,8 @@
         
   
     <h1 class="title">
-      <a href="/about/index.html">
-        关于
+      <a href="/2019/10/13/%E5%A6%82%E4%BD%95%E5%B0%81%E8%A3%85%20Framework%20%E9%9D%99%E6%80%81%E5%BA%93/">
+        如何封装Framework静态库
       </a>
     </h1>
   
@@ -325,7 +327,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2019-11-28</p>
+    <p>2019-10-13</p>
   </a>
 </div>
 
@@ -333,6 +335,14 @@
         
           
             
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/Framework%E9%9D%99%E6%80%81%E5%BA%93/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>Framework静态库</p>
+    </a>
+  </div>
+
 
           
         
@@ -351,14 +361,25 @@
 
     <section class="article typo">
       <div class="article-entry" itemprop="articleBody">
-        <p>我是个快乐的小码农，现从事于iOS开发工作，喜欢美剧和各种风格的纯音乐。</p>
-<h3 id="关于主题"><a href="#关于主题" class="headerlink" title="关于主题"></a>关于主题</h3><p>本站主题是：Material X</p>
-<p>与主题相关的疑问请前去主题文档页面查询或者留言，谢谢！</p>
-<h3 id="关于友链"><a href="#关于友链" class="headerlink" title="关于友链"></a>关于友链</h3><p>友链页：<a href="https://xaoxuu.com/friends/" target="_blank" rel="noopener">https://xaoxuu.com/friends/</a></p>
-<p>想添加友链的朋友请将本站主页 <a href="https://xaoxuu.com" target="_blank" rel="noopener">https://xaoxuu.com</a> 添加到贵站的友链中，然后在我的友链页留言，我看到后会及时添加（只限非盈利性网站）。</p>
-<h3 id="One-More-Thing"><a href="#One-More-Thing" class="headerlink" title="One More Thing"></a>One More Thing</h3><p>懒加载占位图如果喜欢请拿去：图片链接</p>
-<hr>
-<p>欢迎灌水</p>
+        <p>工作中使用的第三方SDK基本上都是闭源的，因为公司不能把自己的机密泄露出去。所以当需要给别人提供SDK但不让他们知道代码的实现时就需要封装成静态库</p>
+<p>静态库有<code>.a</code>库和<code>.framework</code>库，苹果官方更建议我们使用<code>.framework</code>库，因为其更加强大</p>
+<blockquote>
+<p>.a是一个纯二进制文件，.framework中除了有二进制文件之外还有资源文件<br>.a文件不能直接使用，至少要有.h文件配合，.framework文件可以直接使用<br>.a + .h + sourceFile = .framework</p>
+</blockquote>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p>参考这篇博客： <a href="http://www.cocoachina.com/articles/11022" target="_blank" rel="noopener">iOS开发——创建你自己的Framework</a> 讲解的非常详细</p>
+<p>总结一下步骤：</p>
+<ol>
+<li>创建工程，最好是起名为xxxDemo例如AXKitDemo，然后新建一个target名为AXKit，并把原来的工程改名为AXKit（为了方便在demo中调试静态库）</li>
+<li>新建一个target，选择类型为framework</li>
+<li>在framework中创建需要封装的类，写好代码</li>
+<li>在<code>Build Setting</code>里更改参数，<code>Math-O Type</code>为<code>Static Library</code></li>
+<li>在<code>Build Phases -&gt; Headers</code>里将需要暴露出来的头文件从<code>Project</code>移动到<code>Public</code></li>
+<li>添加一个<code>Aggregate</code>的target，并添加运行脚本。目的是把编译出来的真机版和模拟器版的framework合并</li>
+<li>模拟器编译一下，真机编译一下，然后<code>Aggregate</code>编译一下，然后在项目的<code>Products</code>文件夹里就有了最终生成的静态库</li>
+</ol>
+<p><code>Aggregate</code>的Run Script脚本：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="string">"$&#123;ACTION&#125;"</span> = <span class="string">"build"</span> ]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">then</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">INSTALL_DIR=$&#123;SRCROOT&#125;/Products/$&#123;PROJECT_NAME&#125;.framework</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">DEVICE_DIR=$&#123;BUILD_ROOT&#125;/$&#123;CONFIGURATION&#125;-iphoneos/$&#123;PROJECT_NAME&#125;.framework</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">SIMULATOR_DIR=$&#123;BUILD_ROOT&#125;/$&#123;CONFIGURATION&#125;-iphonesimulator/$&#123;PROJECT_NAME&#125;.framework</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ -d <span class="string">"$&#123;INSTALL_DIR&#125;"</span> ]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">then</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">rm -rf <span class="string">"$&#123;INSTALL_DIR&#125;"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">fi</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">mkdir -p <span class="string">"$&#123;INSTALL_DIR&#125;"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">cp -R <span class="string">"$&#123;DEVICE_DIR&#125;/"</span> <span class="string">"$&#123;INSTALL_DIR&#125;/"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">#ditto "$&#123;DEVICE_DIR&#125;/Headers" "$&#123;INSTALL_DIR&#125;/Headers"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">lipo -create <span class="string">"$&#123;DEVICE_DIR&#125;/$&#123;PROJECT_NAME&#125;"</span> <span class="string">"$&#123;SIMULATOR_DIR&#125;/$&#123;PROJECT_NAME&#125;"</span> -output <span class="string">"$&#123;INSTALL_DIR&#125;/$&#123;PROJECT_NAME&#125;"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">#open "$&#123;DEVICE_DIR&#125;"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">#open "$&#123;SRCROOT&#125;/Products"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">fi</span></pre></td></tr></table></figure>
+
 
       </div>
       
@@ -366,6 +387,127 @@
         <center>Bye👋<br></center>
       
       
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-10-13T15:13:20+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>updated at Oct 13, 2019</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/OC/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>OC</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://bondiblue.github.io/2019/10/13/%E5%A6%82%E4%BD%95%E5%B0%81%E8%A3%85%20Framework%20%E9%9D%99%E6%80%81%E5%BA%93/&title=如何封装Framework静态库 | Bondi_blue&pics=https://i.loli.net/2019/11/27/If5NDMEUCHp3rPc.jpg&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://bondiblue.github.io/2019/10/13/%E5%A6%82%E4%BD%95%E5%B0%81%E8%A3%85%20Framework%20%E9%9D%99%E6%80%81%E5%BA%93/&title=如何封装Framework静态库 | Bondi_blue&pics=https://i.loli.net/2019/11/27/If5NDMEUCHp3rPc.jpg&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://bondiblue.github.io/2019/10/13/%E5%A6%82%E4%BD%95%E5%B0%81%E8%A3%85%20Framework%20%E9%9D%99%E6%80%81%E5%BA%93/&title=如何封装Framework静态库 | Bondi_blue&pics=https://i.loli.net/2019/11/27/If5NDMEUCHp3rPc.jpg&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous</h6>
+                          <h4>
+                              <a href="/2019/10/17/SwiftUI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%8F%8A%E5%AE%9E%E8%B7%B5/" rel="prev" title="SwiftUI实践Demo">
+                                
+                                    SwiftUI实践Demo
+                                
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/SwiftUI/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> SwiftUI</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/2018/07/17/iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E6%80%BB%E7%BB%93%20-%20%E6%8E%A2%E5%AF%BBOC%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%9C%AC%E8%B4%A8/" rel="prev" title="iOS底层原理总结 - 探寻OC对象的本质">
+                                  
+                                      iOS底层原理总结 - 探寻OC对象的本质
+                                  
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/OC/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> OC</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+          </div>
       
     </section>
   </article>
@@ -387,6 +529,13 @@
 
 
 
+  <script>
+    window.subData = {
+      title: '如何封装Framework静态库',
+      tools: true
+    }
+  </script>
+
 
 </div>
 <aside class='l_side'>
@@ -394,107 +543,6 @@
     
     
       
-      
-        
-          
-          
-            
-              <section class='widget author'>
-  <div class='content pure'>
-    
-      <div class='avatar'>
-        <img class='avatar' src='https://i.loli.net/2019/11/27/If5NDMEUCHp3rPc.jpg'/>
-      </div>
-    
-    
-      <div class='text'>
-        
-        
-        
-          <p><span id="jinrishici-sentence">Bondi_blue</span></p>
-          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/atom.xml"
-              class="social fas fa-rss flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
-          
-        
-          
-            <a href="mailto:bondiblue@163.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
-          
-        
-          
-            <a href="https://github.com/Bondiblue"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
-          
-        
-          
-            <a href="https://music.163.com/#/user/home?id=44543019"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
-
-            
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-      
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-      
         
           
           
@@ -503,253 +551,22 @@
           
             
               
-
-            
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-      
-        
-          
-          
-        
-          
-          
-        
-          
-          
-            
-              <section class='widget grid'>
-  
-<header class='pure'>
-  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
-  
-</header>
-
-  <div class='content pure'>
-    <ul class="grid navgation">
-      
-        <li><a class="flat-box" title="/" href="/"
-          
-          
-          id="home">
-          
-            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
-          
-          近期文章
-        </a></li>
-      
-        <li><a class="flat-box" title="/archives/" href="/archives/"
-          
-            rel="nofollow"
-          
-          
-          id="archives">
-          
-            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
-          
-          文章归档
-        </a></li>
-      
-        <li><a class="flat-box" title="/projects/" href="/projects/"
-          
-          
-          id="projects">
-          
-            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
-          
-          开源项目
-        </a></li>
-      
-        <li><a class="flat-box" title="/friends/" href="/friends/"
-          
-            rel="nofollow"
-          
-          
-          id="friends">
-          
-            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
-          
-          我的友链
-        </a></li>
-      
-        <li><a class="flat-box" title="https://xaoxuu.com/wiki/material-x/" href="https://xaoxuu.com/wiki/material-x/"
-          
-            rel="nofollow"
-          
-          
-          id="https:xaoxuu.comwikimaterial-x">
-          
-            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
-          
-          主题文档
-        </a></li>
-      
-        <li><a class="flat-box" title="/about/" href="/about/"
-          
-            rel="nofollow"
-          
-          
-          id="about">
-          
-            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
-          
-          关于小站
-        </a></li>
-      
-    </ul>
-  </div>
-</section>
-
-            
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-      
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-            
-              
-  <section class='widget category'>
+  <section class='widget toc-wrapper'>
     
 <header class='pure'>
-  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Categories</div>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;TOC</div>
   
-    <a class="rightBtn"
-    
-      rel="nofollow"
-    
-    
-    href="/categories/"
-    title="categories/">
-    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer noopener" href="javascript:void(0)" target="_blank"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
   
 </header>
 
     <div class='content pure'>
-      <ul class="entry">
-        
-          <li><a class="flat-box" title="/categories/Framework%E9%9D%99%E6%80%81%E5%BA%93/" href="/categories/Framework%E9%9D%99%E6%80%81%E5%BA%93/"><div class='name'>Framework静态库</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box" title="/categories/SwiftUI/" href="/categories/SwiftUI/"><div class='name'>SwiftUI</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box" title="/categories/iOS/" href="/categories/iOS/"><div class='name'>iOS</div><div class='badge'>(1)</div></a></li>
-        
-      </ul>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-text">步骤</span></a></li></ol>
     </div>
   </section>
 
 
             
-          
-        
-          
-          
-        
-          
-          
-        
-      
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-            
-              
-  <section class='widget tagcloud'>
-    
-<header class='pure'>
-  <div><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Hot Tags</div>
-  
-    <a class="rightBtn"
-    
-      rel="nofollow"
-    
-    
-    href="/tags/"
-    title="tags/">
-    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
-  
-</header>
-
-    <div class='content pure'>
-      <a href="/tags/OC/" style="font-size: 24px; color: #555">OC</a> <a href="/tags/SwiftUI/" style="font-size: 14px; color: #999">SwiftUI</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 14px; color: #999">多线程</a>
-    </div>
-  </section>
-
-
-            
-          
-        
-          
-          
-        
-      
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-      
-        
-          
-          
-        
-          
           
         
           

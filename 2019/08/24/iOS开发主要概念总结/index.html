@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>iOS开发主要概念总结 | Bondi_blue</title>
+  
+  
+  <meta name="description" content="Colin的个人博客">
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.1/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="https://i.loli.net/2019/11/28/3n9xyrt7Y4ihFgq.png">
+  
+
+  
+    <link rel="stylesheet" href="/style.css">
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Bondiblue</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/archives/"
+            
+            
+            id="archives">
+            <i class='fas fa-archive fa-fw'></i>&nbsp;归档
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Bondi_blue
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-grin fa-fw'></i>&nbsp;最近
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="categories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="tags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="archives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="archives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/"
+                
+                
+                id="projects">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://xaoxuu.com/wiki/material-x/"
+                
+                  rel="nofollow"
+                
+                
+                id="https:xaoxuu.comwikimaterial-x">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2019/08/24/iOS%E5%BC%80%E5%8F%91%E4%B8%BB%E8%A6%81%E6%A6%82%E5%BF%B5%E6%80%BB%E7%BB%93/">
+        iOS开发主要概念总结
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="/https:/bondiblue.github.io" rel="nofollow">
+        
+          <img src="https://i.loli.net/2019/11/27/If5NDMEUCHp3rPc.jpg">
+        
+        <p>Colin Jin</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-08-24</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/%E6%80%BB%E7%BB%93/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>总结</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <h3 id="一、用什么架构、有什么区别？（MVC、MVVM）"><a href="#一、用什么架构、有什么区别？（MVC、MVVM）" class="headerlink" title="一、用什么架构、有什么区别？（MVC、MVVM）"></a>一、用什么架构、有什么区别？（MVC、MVVM）</h3><p><strong>1.MVC，即Model-View-Controller</strong></p>
+<blockquote>
+<p>它是苹果公司官方推荐的App开发架构，也是一般开发者最先遇到，最经典的架构。<br>它把整个App分为三个部分：<strong>Model负责处理数据</strong>；<strong>View负责处理UI</strong>；<strong>Controller是View和Model的桥梁</strong>，它将数据从Model层传送到View层并展示出来，同时将View层的交互传到Model层以改变数据。<br>它是应用的一种基本架构，主要目的是将不同的代码归并为不同的模块，做到低耦合、代码分配合理、易于扩展维护。</p>
+</blockquote>
+<p><strong>2.MVVM，MVVM衍生于MVC，是对 MVC 的一种演进，它促进了 UI 代码与业务逻辑的分离</strong></p>
+<blockquote>
+<p>在MVVM 中，view 和 view controller正式联系在一起，我们把它们视为一个组件。<br>view 和 view controller 都不能直接引用model，而是引用视图模型（viewModel）。<br>viewModel 是一个放置用户输入验证逻辑，视图显示逻辑，发起网络请求和其他代码的地方。<br>使用MVVM会轻微的增加代码量，但总体上减少了代码的复杂性。</p>
+</blockquote>
+<p><strong>3.MVVM是MVC的升级版，完全兼容当前的MVC架构</strong></p>
+<blockquote>
+<p>MVVM虽然促进了UI 代码与业务逻辑的分离，一定程度上减轻了ViewController的臃肿度，但是View和ViewModel之间的数据绑定使得 MVVM变得复杂和难用了，如果我们不能更好的驾驭两者之间的数据绑定，同样会造成Controller 代码过于复杂，代码逻辑不易维护的问题。</p>
+</blockquote>
+<h3 id="二、解释一下多线程"><a href="#二、解释一下多线程" class="headerlink" title="二、解释一下多线程"></a>二、解释一下多线程</h3><p><strong>1.OC中多线程根据封装程度可以分为三个层次：<code>NSThread</code>、<code>GCD和NSOperation</code></strong></p>
+<p><strong>2.<code>NSThread</code>，<code>NSThread</code>是封装程度最小最轻量级的，使用更灵活，但要手动管理线程的生命周期、线程同步和线程加锁等，开销较大</strong></p>
+<p><strong>3.GCD(Grand Central Dispatch)，又叫大中央调度，是 Apple 开发的一个多核编程的较新的解决方法</strong></p>
+<blockquote>
+<p>它主要用于优化应用程序以支持多核处理器以及其他对称多处理系统。提供了简洁的C语言接口，使用更加简单高效，也是苹果推荐的方式<br>可以自动管理线程的生命周期（创建线程、调度任务、销毁线程）<br>可用于多核的并行运算<br>会自动利用更多的 CPU 内核（比如双核、四核）<br>只需要告诉 GCD 想要执行什么任务，不需要编写任何线程管理代码<br>主要是一些同步执行、异步执行、串行队列、并行队列<br>将”任务”(block)添加到 队列(串行/并发/主队列/全局队列]),并且指定执行任务的函数(同步/异步)<br>一次执行<br>延迟执行</p>
+</blockquote>
+<p><strong>4.NSOperation，NSOperation是一个抽象类，不能直接使用，其目的就是为了定义子类共有的方法和属性</strong></p>
+<blockquote>
+<p><strong>NSOperation、NSOperationQueue</strong> 是基于 GCD 更高一层的封装，完全面向对象。但是比 GCD 更简单易用、代码可读性也更高<br><strong>其子类有两个：NSInvocationOperation、NSBlockOperation</strong><br>本质上就是GCD的并发队列，就是异步执行任务</p>
+</blockquote>
+<h3 id="三、RunTime"><a href="#三、RunTime" class="headerlink" title="三、RunTime"></a>三、RunTime</h3><p><strong>1.Runtime是属于Object-C的底层，是一套比较底层的纯C语言API，属于C语言库</strong></p>
+<p><strong>2.在我们平时编写的Object-C代码中, 程序运行过程时, 其实最终都是转成了Runtime的C语言代码, Runtime算是Object-C的幕后工作者</strong></p>
+<p><strong>3.静态语言：</strong></p>
+<blockquote>
+<p>如C语言，编译阶段就要决定调用哪个函数，如果函数未实现就会编译报错</p>
+</blockquote>
+<p><strong>动态语言：</strong></p>
+<blockquote>
+<p>如OC语言，编译阶段并不能决定真正调用哪个函数，只要函数声明过即使没有实现也不会报错。<br>OC是一门动态语言，就是因为它总是把一些决定性的工作从编译阶段推迟到运行时阶段。<br>OC代码的运行不仅需要编译器，还需要运行时系统(Runtime Sytem)来执行编译后的代码。</p>
+</blockquote>
+<p><strong>4.Runtime 实际上是一个库，这个库使我们可以在程序运行时动态的创建对象、检查对象，修改类和对象的方法</strong></p>
+<p><strong>5.消息（方法）传递、消息转发</strong></p>
+<p><strong>6.关联对象(Objective-C Associated Objects)给分类增加属性</strong></p>
+<p><strong>7.魔法(Method Swizzling)方法添加和替换</strong></p>
+<blockquote>
+<p>在 Objective-C 的运行时中，每个类有两个方法都会自动调用。+load 是在一个类被初始装载时调用，+initialize 是在应用第一次调用该类的类方法或实例方法前调用的。两个方法都是可选的，并且只有在方法被实现的情况下才会被调用。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">@implementation ViewController</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">+ (void)load &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    static dispatch_once_t onceToken;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        Class class &#x3D; [self class];</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        SEL originalSelector &#x3D; @selector(viewDidLoad);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        SEL swizzledSelector &#x3D; @selector(jkviewDidLoad);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        Method originalMethod &#x3D; class_getInstanceMethod(class,originalSelector);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        Method swizzledMethod &#x3D; class_getInstanceMethod(class,swizzledSelector);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        &#x2F;&#x2F;judge the method named  swizzledMethod is already existed.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        BOOL didAddMethod &#x3D; class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">        &#x2F;&#x2F; if swizzledMethod is already existed.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">        if (didAddMethod) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">            class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        else &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">            method_exchangeImplementations(originalMethod, swizzledMethod);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    &#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">- (void)jkviewDidLoad &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">    NSLog(@&quot;替换的方法&quot;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">    </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">    [self jkviewDidLoad];</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">    NSLog(@&quot;自带的方法&quot;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">    </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">    [super viewDidLoad];</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line">@end</span></pre></td></tr></table></figure>
+
+<p><strong>8.KVO的实现</strong></p>
+<blockquote>
+<p>全称是Key-value observing，翻译成键值观察。提供了一种当其它对象属性被修改的时候能通知当前对象的机制。</p>
+</blockquote>
+<p><strong>9.实现字典和模型的自动转换(MJExtension)</strong></p>
+<blockquote>
+<p>原理描述：用runtime提供的函数遍历Model自身所有属性，如果属性在json中有对应的值，则将其赋值。<br>核心方法：在NSObject的分类中添加方法。</p>
+</blockquote>
+<p><strong>10.实现NSCoding的自动归档和自动解档</strong></p>
+<blockquote>
+<p>原理描述：用runtime提供的函数遍历Model自身所有属性，并对属性进行encode和decode操作。<br>核心方法：在Model的基类中重写方法。</p>
+</blockquote>
+<h3 id="四-RunLoop"><a href="#四-RunLoop" class="headerlink" title="四.RunLoop"></a>四.RunLoop</h3><p><strong>1.RunLoop</strong></p>
+<blockquote>
+<p>RunLoop是多线程的法宝，即一个线程一次只能执行一个任务，执行完任务后就会退出线程。主线程执行完即时任务时会继续等待接收事件而不退出。非主线程通常来说就是为了执行某一任务的，执行完毕就需要归还资源，因此默认是不运行RunLoop的；</p>
+</blockquote>
+<p><strong>2.每一个线程都有其对应的RunLoop，只是默认只有主线程的RunLoop是启动的，其它子线程的RunLoop默认是不启动的，若要启动则需要手动启动</strong></p>
+<p><strong>3.在一个单独的线程中，如果需要在处理完某个任务后不退出，继续等待接收事件，则需要启用RunLoop</strong></p>
+<p><strong>4.NSRunLoop提供了一个添加NSTimer的方法，可以指定Mode，如果要让任何情况下都回调，则需要设置Mode为Common模式</strong></p>
+<p><strong>5.保证线程的长时间存活</strong></p>
+<p><strong>6.保证NSTimer在视图滑动时，依然能正常运转</strong></p>
+<h3 id="五-常用的设计模式"><a href="#五-常用的设计模式" class="headerlink" title="五.常用的设计模式"></a>五.常用的设计模式</h3><p><strong>1.单例模式（Singleton）:</strong></p>
+<blockquote>
+<p>此模式保证对于一个特有的类，只有一个公共的实例存在。它一般与懒加载一起出现，只有被需要时才会创建。单例模式的例子有UserDefaults、UIApplication、UIScreen；</p>
+</blockquote>
+<p><strong>2.观察者模式（Observer）:</strong></p>
+<blockquote>
+<p>它定义对象之间的一种一对多的依赖关系，每当一个对象状态发生改变时，其相关依赖对象皆得到通知并被自动更新。在iOS中的典型实现是NotificationCenter和KVO；<br>KVO,Key-Value Observer,即键值观察。它是一种没有通知中心的观察者模式的实现方式。一个主体对象管理所有依赖于它的观察者对象，并且在自身状态发生改变时主动通知观察者对象。<br>它的具体实现步骤如下。<br>（1）注册观察者<br>（2）更改主题对象属性的值，即触发发送更改的通知。<br>（3）在制定的回调函数中，处理收到的更改通知。</p>
+</blockquote>
+<h3 id="六-项目的优化"><a href="#六-项目的优化" class="headerlink" title="六.项目的优化"></a>六.项目的优化</h3><p><strong>快：</strong>使用时避免出现卡顿，响应速度快，减少用户等待的时间，满足用户期望。<br><strong>稳：</strong>不要在用户使用过程中崩溃和无响应。<br><strong>省：</strong>节省流量和耗电，减少用户使用成本，避免使用时导致手机发烫。<br><strong>小：</strong>安装包小可以降低用户的安装成本。</p>
+<p><strong>1.重用问题：</strong></p>
+<blockquote>
+<p>如UITableViewCells、UICollectionViewCells、UITableViewHeaderFooterViews设置正确的reuseIdentifier，充分重用；<br>尽量把views设置为不透明：当opque为NO的时候，图层的半透明取决于图片和其本身合成的图层为结果，可提高性能；</p>
+</blockquote>
+<p><strong>2.不要使用太复杂的XIB/Storyboard：</strong></p>
+<blockquote>
+<p>载入时就会将XIB/storyboard需要的所有资源，包括图片全部载入内存，即使未来很久才会使用。那些相比纯代码写的延迟加载，性能及内存就差了很多；</p>
+</blockquote>
+<p><strong>3.选择正确的数据结构：</strong></p>
+<blockquote>
+<p>学会选择对业务场景最合适的数组结构是写出高效代码的基础。比如，数组: 有序的一组值。使用索引来查询很快，使用值查询很慢，插入/删除很慢。字典: 存储键值对，用键来查找比较快。集合: 无序的一组值，用值来查找很快，插入/删除很快。</p>
+</blockquote>
+<p><strong>4.延迟加载：</strong></p>
+<blockquote>
+<p>对于不应该使用的数据，使用延迟加载方式。对于不需要马上显示的视图，使用延迟加载方式。比如，网络请求失败时显示的提示界面，可能一直都不会使用到，因此应该使用延迟加载。</p>
+</blockquote>
+<p><strong>5.数据缓存：</strong></p>
+<blockquote>
+<p>对于cell的行高要缓存起来，使得reload数据时，效率也极高。而对于那些网络数据，不需要每次都请求的，应该缓存起来，可以写入数据库，也可以通过plist文件存储，例如个人信息的一些数据，也许会有好几个页面会用到，那么就把数据存入本地，使用的时候根据需要可以直接从本地进行加载。</p>
+</blockquote>
+<p><strong>6.不要阻塞主线程，主线程主要做以下几个方面工作：</strong></p>
+<blockquote>
+<p>UI 生命周期控制、系统事件处理、消息处理、界面布局、界面绘制、界面刷新，除此之外，应该尽量避免将其他处理放在主线程中，特别复杂的数据计算和网络请求等。</p>
+</blockquote>
+<p><strong>7.处理内存警告</strong></p>
+<blockquote>
+<p>在app delegate中使用<code>applicationDidReceiveMemoryWarning</code>的方法;<br>注册并接收 <code>UIApplicationDidReceiveMemoryWarningNotification</code>的通知;</p>
+</blockquote>
+<p><strong>8.选择正确的数据存储选项</strong></p>
+<p><strong>9.重用和延迟加载(lazy load) Views</strong></p>
+<blockquote>
+<p>更多的view意味着更多的渲染，也就是更多的CPU和内存消耗。<br>不要一次创建所有的subview，而是当需要时才创建。</p>
+</blockquote>
+<p><strong>10.尽量把views设置为透明</strong></p>
+<blockquote>
+<p>如果你有透明的Views你应该设置它们的opaque属性为YES。<br>原因是这会使系统用一个最优的方式渲染这些views。<br>在相对比较静止的画面中，设置这个属性不会有太大影响。然而当这个view嵌在scroll view里边，或者是一个复杂动画的一部分，不设置这个属性的话会在很大程度上影响app的性能。</p>
+</blockquote>
+<h3 id="七、KVC、KVO"><a href="#七、KVC、KVO" class="headerlink" title="七、KVC、KVO"></a>七、KVC、KVO</h3><p><strong>1.键值编码是一种间接访问对象的属性使用字符串来标识属性，而不是通过调用存取方法，直接或通过实例变量访问的机制，非对象类型的变量将被自动封装或者解封成对象，很多情况下会简化程序代码</strong></p>
+<p><strong>2.KVC的缺点：</strong></p>
+<blockquote>
+<p>一旦使用 KVC 你的编译器无法检查出错误,即不会对设置的键、键路径进行错误检查,且执行效率要低于合成存取器方法和自定的 setter 和 getter 方法。因为使用 KVC 键值编码,它必须先解析字符串,然后在设置或者访问对象的实例变量。</p>
+</blockquote>
+<p><strong>3.键值观察机制是一种能使得对象获取到其他对象属性变化的通知 ，极大的简化了代码</strong></p>
+<p><strong>4.实现 KVO 键值观察模式,被观察的对象必须使用 KVC 键值编码来修 改它的实例变量,这样才能被观察者观察到</strong></p>
+<p>因此，KVC是KVO的基础。</p>
+<p><strong>5.注册观察者(注意：观察者和被观察者不会被保留也不会被释放)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">options:(NSKeyValueObservingOptions)options </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">context:(void *)context;</span></pre></td></tr></table></figure>
+
+<p><strong>6.接收变更通知</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">ofObject:(id)object change:(NSDictionary *)change context:(void *)context;</span></pre></td></tr></table></figure>
+
+<p><strong>7.移除对象的观察者身份</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">- (void)removeObserver:(NSObject *)observer</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">forKeyPath:(NSString *)keyPath;</span></pre></td></tr></table></figure>
+
+<p><strong>8.KVO中谁要监听谁注册，然后对响应进行处理，使得观察者与被观察者完全解耦。KVO只检测类中的属性，并且属性名都是通过NSString来查找，编译器不会检错和补全，全部取决于自己</strong></p>
+<h3 id="八、Block、通知、代理"><a href="#八、Block、通知、代理" class="headerlink" title="八、Block、通知、代理"></a>八、Block、通知、代理</h3><p><strong>1.代理</strong></p>
+<blockquote>
+<p>是一种回调机制，且是一对一的关系，Delegate需要定义协议方法，代理对象实现协议方法，并且需要建立代理关系才可以实现通信；</p>
+</blockquote>
+<p><strong>2.通知</strong></p>
+<blockquote>
+<p>是一对多的关系，一个对向所有的观察者提供变更通知；</p>
+</blockquote>
+<p><strong>3.效率：</strong></p>
+<blockquote>
+<p>Delegate比NSNOtification高；</p>
+</blockquote>
+<p><strong>4.Block</strong></p>
+<blockquote>
+<p>一般是一对一的通信；</p>
+</blockquote>
+<blockquote>
+<p>Block更加简洁，不需要定义繁琐的协议方法，但通信事件比较多的话，建议使用Delegate；</p>
+</blockquote>
+<h3 id="九、AFNetWorking底层原理"><a href="#九、AFNetWorking底层原理" class="headerlink" title="九、AFNetWorking底层原理"></a>九、AFNetWorking底层原理</h3><p><strong>1.AFHTTPRequestOperationManager：</strong></p>
+<blockquote>
+<p>内部封装的是 NSURLConnection, 负责发送网络请求, 使用最多的一个类。(3.0废弃)</p>
+</blockquote>
+<p><strong>2.AFHTTPSessionManager：</strong></p>
+<blockquote>
+<p>内部封装是 NSURLSession, 负责发送网络请求,使用最多的一个类。</p>
+</blockquote>
+<p><strong>2.AFNetworkReachabilityManager：</strong></p>
+<blockquote>
+<p>实时监测网络状态的工具类。当前的网络环境发生改变之后,这个工具类就可以检测到。</p>
+</blockquote>
+<p><strong>3. AFSecurityPolicy：</strong></p>
+<blockquote>
+<p>网络安全的工具类, 主要是针对 HTTPS 服务</p>
+</blockquote>
+<p><strong>4.AFURLRequestSerialization：</strong></p>
+<blockquote>
+<p>序列化工具类,基类。上传的数据转换成JSON格式(AFJSONRequestSerializer).使用不多。</p>
+</blockquote>
+<p><strong>6). AFURLResponseSerialization：</strong></p>
+<blockquote>
+<p>反序列化工具类;基类.使用比较多。</p>
+</blockquote>
+<p><strong>7.AFJSONResponseSerializer:</strong></p>
+<blockquote>
+<p>JSON解析器,默认的解析器。</p>
+</blockquote>
+<p><strong>8.AFHTTPResponseSerializer:</strong></p>
+<blockquote>
+<p>万能解析器; JSON和XML之外的数据类型,直接返回二进制数据.对服务器返回的数据不做任何处理。</p>
+</blockquote>
+<p><strong>9.AFXMLParserResponseSerializer:</strong></p>
+<blockquote>
+<p>XML解析器;</p>
+</blockquote>
+<h3 id="10-Scoket连接和HTTP连接的区别"><a href="#10-Scoket连接和HTTP连接的区别" class="headerlink" title="10.Scoket连接和HTTP连接的区别"></a>10.Scoket连接和HTTP连接的区别</h3><p><strong>1.HTTP连接：</strong></p>
+<blockquote>
+<p>短连接，客户端向服务器发送一次请求，服务器响应后连接断开，节省资源。服务器不能主动给客户端响应（除非采用HTTP长连接技术），iPhone主要使用类NSURLConnection</p>
+</blockquote>
+<p><strong>2.Socket连接：</strong></p>
+<blockquote>
+<p>长连接，客户端跟服务器端直接使用Socket进行连接，没有规定连接后断开，因此客户端和服务器段保持连接通道，双方可以主动发送数据，一般多用于游戏Socket默认连接超时时间是30秒，默认大小是8K（理解为一个数据包大小）</p>
+</blockquote>
+<h3 id="十一、isa指针"><a href="#十一、isa指针" class="headerlink" title="十一、isa指针"></a>十一、isa指针</h3><p><strong>1.在 ios 开发中，类也是一个对象，我们称之为类对象， 所有对象中，包含实例对象和类对象，都含有一个isa 指针</strong></p>
+<blockquote>
+<p>实例对象的isa指针， 指向他的类对象，类对象的isa 指针， 指向他的元类。</p>
+</blockquote>
+<p><strong>2.系统判断一个对象属于哪个类，也是通过这个对象的isa指针的指向来判断</strong></p>
+<p><strong>3.对象中的成员变量，存储在对象本身，对象的实例方法，存储在他的isa 指针所指向的对象中</strong></p>
+<blockquote>
+<p>即：减号方法存储在类对象中，类方法存储在类对象isa所指向的元类中，成员变量的值储存在对象中。</p>
+</blockquote>
+<p><strong>4.对象在调用减号方法的时候，系统会在对象的isa指针所指向的类对象中寻找方法，这一段在kvo的实现原理中就能看到，kvo的实现原理就是系统动态的生成一个类对象，这个类是监听对象的类的子类，在生成的类中重写了监听属性的set方法，实现对set方法的监听，之后将监听对象的isa指针指向系统动态生成的这个类，当监听对象调用set方法时，由于监听对象的isa指针指向的是刚刚动态生成的类，所以在其中找的的set方法也是重写过有监听功能的set方法，这就是kvo的实现原理。同理，我们也可以通过rutime中的方法设置某个对象isa指针指向的类对象，让对象调用一些原本不属于他的方法</strong></p>
+<h3 id="十二、H5、CSS、JavaScript"><a href="#十二、H5、CSS、JavaScript" class="headerlink" title="十二、H5、CSS、JavaScript"></a>十二、H5、CSS、JavaScript</h3><h3 id="十三、WebView，JS和原生的交互"><a href="#十三、WebView，JS和原生的交互" class="headerlink" title="十三、WebView，JS和原生的交互"></a>十三、WebView，JS和原生的交互</h3><p>iOS8.0之后，苹果推荐使用WebKit框架中的WKWebView来加载网页，使用WKWebViewConfiguration来配置JS交互。<br><strong>网页切换</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[_webView goBack];    &#x2F;&#x2F;页面后退</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">[_webView goForward];    &#x2F;&#x2F;页面前进</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">[_webView reload];    &#x2F;&#x2F;刷新当前页面</span></pre></td></tr></table></figure>
+
+<p><strong>JavaSript调用OC</strong></p>
+<blockquote>
+<p>主要依靠WKScriptMessageHandler协议类、WKUserContentController其中:<br>WKUserContentController对象负责注册JS方法，设置处理接收JS方法的代理，代理遵守WKScriptMessageHandler，实现捕捉到JS消息的回调方法。</p>
+</blockquote>
+<p><strong>1、配置与JavaScript的交互</strong></p>
+<blockquote>
+<p>用WKWebViewConfiguration来配置JS交互</p>
+</blockquote>
+<p><strong>2、使用WKUserContentController，用来做 原生与JavaScript的交互管理</strong></p>
+<p><strong>3、使用协议类WKScriptMessageHandler，用来处理监听JavaScript方法从而调用原生OC方法。（和WKUserContentController搭配使用）</strong></p>
+<p><strong>4、通过 接收JS传出消息的name 进行捕捉的回调方法</strong></p>
+<blockquote>
+<p>ps：遵守WKScriptMessageHandler协议，代理是由WKUserContentControl设置</p>
+</blockquote>
+<p><strong>OC调用JavaSript</strong></p>
+<blockquote>
+<p>使用WKUserScript，执行自定义的JavaScript代码</p>
+</blockquote>
+<p><strong>WKWebView涉及的代理方法</strong></p>
+<p><strong>WKNavigationDelegate协议</strong></p>
+<blockquote>
+<p>主要处理一些跳转、加载处理操作</p>
+</blockquote>
+<h3 id="十四、iOS事件响应机制"><a href="#十四、iOS事件响应机制" class="headerlink" title="十四、iOS事件响应机制"></a>十四、iOS事件响应机制</h3><p>iOS的事件响应必须是<code>UIResponder</code>对象及其子类，我们Command查看层级关系不难发现，<code>UITextView</code>，<code>UILabel</code>，<code>UIButton</code>等控件他们都是<code>UIResponder</code>的子类。这也是他们能够响应事件的基础。</p>
+<p>当触摸事件发生时，首先系统通过<code>hitTest</code>方法找到能最合适的view，所谓最合适的view 其实就是 触摸事件 他的触摸点是否在这个View上，一个点可能在多个叠加的视图上，所以系统会找到所有的view（点所在的view），方向是从底下往上，所以判断点的顺序就是父view-&gt;子view-&gt;子view的子view，这样遍历下去，配合<code>pointconvert</code>方法和<code>pointinside</code>方法去判断这个点是否在这个view上，在就遍历他的子view，直到不满足条件。</p>
+<p><strong>事件的传递</strong></p>
+<p>系统把事件加入到一个由<code>UIApplication</code>管理的事件队列中<br>之所以加入队列而不是栈是因为队列先进先出，意味着先产生的事件，先处理</p>
+<p>然后，事件会按照<code>UIApplication</code> -&gt; <code>UIWindow</code> -&gt; <code>SuperView</code> -&gt; <code>SubView</code>的顺序不断的检测</p>
+<p>而检测就是靠两个方法<code>hitTest</code>与<code>pointInside</code></p>
+<h3 id="十五、iOS内存管理"><a href="#十五、iOS内存管理" class="headerlink" title="十五、iOS内存管理"></a>十五、iOS内存管理</h3><p><strong>1.首先，严格的内存管理，能够是我们的应用程在性能上有很大的提高，如果忽略内存管理，可能导致应用占用内存过高，导致程序崩溃</strong></p>
+<p><strong>2.内存管理方式主要分为3种:</strong></p>
+<blockquote>
+<p>ARC（自动内存计数）、MRC（手动内存计数）、内存池</p>
+</blockquote>
+<p><strong>3.自动内存计数和手动内存计数都是用计数管理</strong></p>
+<blockquote>
+<p>每个对象都有一个引用计数器，每个新对象的计数器是1，当对象的计数器减为0时，就会被销毁；<br>通过retain可以让对象的计数器+1、release可以让对象的计数器-1；<br>保证任何时候指向对象的指针个数和对象的引用计数相同，多一个指针指向这个对象这个对象的引用计数就加1，少一个指针指向这个对象这个对象的引用计数就减1。没有指针指向这个对象对象就被释放了。</p>
+</blockquote>
+<p><strong>4.内存管理遵循谁使用、谁创建；谁引用、谁管理的原则</strong></p>
+<p><strong>5.被存入到自动释放池内的对象，当自动释放池被销毁时，会对池内的对象全部做一次release操作</strong></p>
+<p><strong>6.自动释放池，什么时候创建?</strong></p>
+<blockquote>
+<p>程序刚启动的时候，也会创建一个自动释放池</p>
+</blockquote>
+<blockquote>
+<p>产生事件以后，运行循环开始处理事件，就会创建自动释放池</p>
+</blockquote>
+<p><strong>7.什么时候销毁的?</strong></p>
+<blockquote>
+<p>程序运行结束之前销毁</p>
+</blockquote>
+<blockquote>
+<p>事件处理结束以后，会销毁自动释放池</p>
+</blockquote>
+<blockquote>
+<p>还有在池子满的时候，也会销毁</p>
+</blockquote>
+
+      </div>
+      
+        <br>
+        <center>Bye👋<br></center>
+      
+      
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-08-24T15:13:20+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>updated at Aug 24, 2019</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/iOS/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>iOS</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://bondiblue.github.io/2019/08/24/iOS%E5%BC%80%E5%8F%91%E4%B8%BB%E8%A6%81%E6%A6%82%E5%BF%B5%E6%80%BB%E7%BB%93/&title=iOS开发主要概念总结 | Bondi_blue&pics=https://i.loli.net/2019/11/27/If5NDMEUCHp3rPc.jpg&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://bondiblue.github.io/2019/08/24/iOS%E5%BC%80%E5%8F%91%E4%B8%BB%E8%A6%81%E6%A6%82%E5%BF%B5%E6%80%BB%E7%BB%93/&title=iOS开发主要概念总结 | Bondi_blue&pics=https://i.loli.net/2019/11/27/If5NDMEUCHp3rPc.jpg&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://bondiblue.github.io/2019/08/24/iOS%E5%BC%80%E5%8F%91%E4%B8%BB%E8%A6%81%E6%A6%82%E5%BF%B5%E6%80%BB%E7%BB%93/&title=iOS开发主要概念总结 | Bondi_blue&pics=https://i.loli.net/2019/11/27/If5NDMEUCHp3rPc.jpg&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous</h6>
+                          <h4>
+                              <a href="/2019/10/13/%E5%A6%82%E4%BD%95%E5%B0%81%E8%A3%85%20Framework%20%E9%9D%99%E6%80%81%E5%BA%93/" rel="prev" title="如何封装Framework静态库">
+                                
+                                    如何封装Framework静态库
+                                
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/OC/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> OC</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/2018/07/17/iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E6%80%BB%E7%BB%93%20-%20%E6%8E%A2%E5%AF%BBOC%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%9C%AC%E8%B4%A8/" rel="prev" title="iOS底层原理总结 - 探寻OC对象的本质">
+                                  
+                                      iOS底层原理总结 - 探寻OC对象的本质
+                                  
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/OC/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> OC</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
+
+  
+
+
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: 'iOS开发主要概念总结',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;TOC</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer noopener" href="javascript:void(0)" target="_blank"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、用什么架构、有什么区别？（MVC、MVVM）"><span class="toc-text">一、用什么架构、有什么区别？（MVC、MVVM）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、解释一下多线程"><span class="toc-text">二、解释一下多线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、RunTime"><span class="toc-text">三、RunTime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-RunLoop"><span class="toc-text">四.RunLoop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-常用的设计模式"><span class="toc-text">五.常用的设计模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六-项目的优化"><span class="toc-text">六.项目的优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、KVC、KVO"><span class="toc-text">七、KVC、KVO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八、Block、通知、代理"><span class="toc-text">八、Block、通知、代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#九、AFNetWorking底层原理"><span class="toc-text">九、AFNetWorking底层原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-Scoket连接和HTTP连接的区别"><span class="toc-text">10.Scoket连接和HTTP连接的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十一、isa指针"><span class="toc-text">十一、isa指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十二、H5、CSS、JavaScript"><span class="toc-text">十二、H5、CSS、JavaScript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十三、WebView，JS和原生的交互"><span class="toc-text">十三、WebView，JS和原生的交互</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十四、iOS事件响应机制"><span class="toc-text">十四、iOS事件响应机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十五、iOS内存管理"><span class="toc-text">十五、iOS内存管理</span></a></li></ol>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="mailto:bondiblue@163.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/Bondiblue"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=44543019"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+  <div>
+    Use
+    <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
+    as theme
+    
+      , 
+      total visits
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      times
+    
+    . 
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/app.js"></script>
+
+
+  <script src="/js/search.js"></script>
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "Copied";
+  let COPY_FAILURE = "Copy failed";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

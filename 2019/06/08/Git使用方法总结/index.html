@@ -368,20 +368,20 @@
 <p>为什么GitHub需要SSH Key呢？因为GitHub需要识别出你推送的提交确实是你推送的，而不是别人冒充的，而Git支持SSH协议，所以，GitHub只要知道了你的公钥，就可以确认只有你自己才能推送。</p>
 <p>当然，GitHub允许你添加多个Key。假定你有若干电脑，你一会儿在公司提交，一会儿在家里提交，只要把每台电脑的Key都添加到GitHub，就可以在每台电脑上往GitHub推送了。</p>
 <p>今天提交git仓库的时候，遇到了如截图所示的问题，提示Your branch is up-to-date with ‘origin/master’.</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/7271374-610827abc6eb88a8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/486" alt="img"></p>
+<p><img src="https://i.loli.net/2019/12/19/SVFKb3kLymlONC2.png" alt="截屏2019-12-19上午12.35.16.png"></p>
 <p>查了些资料后，发现其根本原因是版本分支的问题</p>
 <h5 id="这时候我们就需要新建一个分支"><a href="#这时候我们就需要新建一个分支" class="headerlink" title="这时候我们就需要新建一个分支"></a>这时候我们就需要新建一个分支</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch newbranch</span></pre></td></tr></table></figure>
 
 <h5 id="然后检查分支是否创建成功"><a href="#然后检查分支是否创建成功" class="headerlink" title="然后检查分支是否创建成功"></a>然后检查分支是否创建成功</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch</span></pre></td></tr></table></figure>
 
 <p>会有如下提示（前面的*代表的是当前你所在的工作分支）</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/7271374-d2b41f107ddd92b1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/461" alt="img"></p>
+<p><img src="https://i.loli.net/2019/12/19/vya3LgsZ7doUGSW.png" alt="截屏2019-12-19上午12.36.39.png"></p>
 <h5 id="然后切换到你的新分支"><a href="#然后切换到你的新分支" class="headerlink" title="然后切换到你的新分支"></a>然后切换到你的新分支</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout newbranch</span></span></pre></td></tr></table></figure>
 
 <p>如果不放心，还可以 $ git branch确认下</p>
 <h5 id="然后将你的改动提交到新分支上"><a href="#然后将你的改动提交到新分支上" class="headerlink" title="然后将你的改动提交到新分支上"></a>然后将你的改动提交到新分支上</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add . </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"18.03.01"</span></span></span></pre></td></tr></table></figure>
 
-<h5 id="然后git-status检查是否成功"><a href="#然后git-status检查是否成功" class="headerlink" title="然后git status检查是否成功"></a>然后<code>git status</code>检查是否成功</h5><p><img src="https:////upload-images.jianshu.io/upload_images/7271374-e7db256c45e435f5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/476" alt="img"></p>
+<h5 id="然后git-status检查是否成功"><a href="#然后git-status检查是否成功" class="headerlink" title="然后git status检查是否成功"></a>然后<code>git status</code>检查是否成功</h5><p><img src="https://i.loli.net/2019/12/19/1tkOUYPfarSyjF9.png" alt="截屏2019-12-19上午12.37.14.png"></p>
 <h5 id="然后切换到主分支"><a href="#然后切换到主分支" class="headerlink" title="然后切换到主分支"></a>然后切换到主分支</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout master</span></span></pre></td></tr></table></figure>
 
 <h5 id="然后将新分支提交的改动合并到主分支上"><a href="#然后将新分支提交的改动合并到主分支上" class="headerlink" title="然后将新分支提交的改动合并到主分支上"></a>然后将新分支提交的改动合并到主分支上</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git merge newbranch</span></span></pre></td></tr></table></figure>

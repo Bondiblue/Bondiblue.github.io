@@ -659,20 +659,23 @@
 <p> 记住一点：如果这个对象是你alloc或者new出来的，你就需要调用release<br>        如果使用autorelease，那么仅在发生过retain的时候release一次（让retain count始终为1）<br><strong>3、xcode 中的新标记 strong weak</strong><br>strong 用来修饰强引用的属性；对应以前retain</p>
 <p>weak 用来修饰弱引用的属性；对应以前的assign</p>
 ]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
       <tags>
-        <tag>Objective-C</tag>
+        <tag>OC</tag>
       </tags>
   </entry>
   <entry>
     <title>iOS底层原理总结 - 探寻OC对象的本质</title>
-    <url>/2018/07/17/iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E6%80%BB%E7%BB%93%20-%20%E6%8E%A2%E5%AF%BBOC%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%9C%AC%E8%B4%A8/</url>
+    <url>/2018/10/09/iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E6%80%BB%E7%BB%93%20-%20%E6%8E%A2%E5%AF%BBOC%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%9C%AC%E8%B4%A8/</url>
     <content><![CDATA[<p>转载自：<a href="https://www.jianshu.com/p/91a9176851cd" target="_blank" rel="noopener">iOS底层原理总结</a></p>
 <p>对小码哥底层班视频学习的总结与记录。面试题部分，通过对面试题的分析探索问题的本质内容。</p>
 <blockquote>
 <p>面试题：一个NSObject对象占用多少内存？</p>
 </blockquote>
 <p>探寻OC对象的本质，我们平时编写的Objective-C代码，底层实现其实都是C\C++代码。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1434508-7c3e4ae59cb80fc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/format/webp" alt="img"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1434508-7c3e4ae59cb80fc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1196" alt="img04"></p>
 <p>OC的对象结构都是通过基础C\C++的结构体实现的。<br>我们通过创建OC文件及对象，并将OC文件转化为C++文件来探寻OC对象的本质</p>
 <p>OC如下代码</p>
 <figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="built_in">NSObject</span> *objc = [[<span class="built_in">NSObject</span> alloc] init];</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Hello, World!"</span>);</span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
@@ -717,8 +720,7 @@
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">Student *stu = [[Student alloc] init];</span></pre></td></tr><tr><td class="code"><pre><span class="line">stu -&gt; _no = <span class="number">4</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">stu -&gt; _age = <span class="number">5</span>;</span></pre></td></tr></table></figure>
 
 <p>那么上述代码实际上在内存中的体现为，创建Student对象首先会分配16个字节，存储3个东西，isa指针8个字节，4个字节的_no ,4个字节的_age</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/18569867-7779e69767c0143c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="img"></p>
-<p>image.png</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/18569867-7779e69767c0143c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img00"></p>
 <p>sutdent对象的3个变量分别有自己的地址。而stu指向isa指针的地址。因此stu的地址为0x100400110，stu对象在内存中占用16个字节的空间。并且经过赋值，_no里面存储4 ，_age里面存储5</p>
 <p>验证Student在内存中模样</p>
 <figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> Student_IMPL &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    Class isa;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> _no;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> _age;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;;</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Student</span> : <span class="title">NSObject</span></span></span></pre></td></tr><tr><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">@public</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> _no;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> _age;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">@end</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Student</span></span></span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">            <span class="comment">// 强制转化</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">            <span class="keyword">struct</span> Student_IMPL *stuImpl = (__bridge <span class="keyword">struct</span> Student_IMPL *)stu;</span></pre></td></tr><tr><td class="code"><pre><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"_no = %d, _age = %d"</span>, stuImpl-&gt;_no, stuImpl-&gt;_age); <span class="comment">// 打印出 _no = 4, _age = 5</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
@@ -729,8 +731,7 @@
 
 <h4 id="窥探内存结构"><a href="#窥探内存结构" class="headerlink" title="窥探内存结构"></a>窥探内存结构</h4><p>实时查看内存数据</p>
 <p><strong>方式一：通过打断点。</strong><br> Debug Workflow -&gt; viewMemory address中输入stu的地址</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-1c2f8f333637cb41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1434508-1c2f8f333637cb41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200" alt="img01"></p>
 <p>从上图中，我们可以发现读取数据从高位数据开始读，查看前16位字节，每四个字节读出的数据为<br> 16进制 0x0000004(4字节) 0x0000005(4字节) isa的地址为 00D1081000001119(8字节)</p>
 <p><strong>方式二：通过lldb指令xcode自带的调试器</strong></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">memory read <span class="number">0x10074c450</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">// 简写  x 0x10074c450</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">// 增加读取条件</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">// memory read/数量格式字节数  内存地址</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">// 简写 x/数量格式字节数  内存地址</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">// 格式 x是16进制，f是浮点，d是10进制</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">// 字节大小   b：byte 1字节，h：half word 2字节，w：word 4字节，g：giant word 8字节</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">示例：x/<span class="number">4</span>xw    <span class="comment">//   /后面表示如何读取数据 w表示4个字节4个字节读取，x表示以16进制的方式读取数据，4则表示读取4次</span></span></pre></td></tr></table></figure>
@@ -738,8 +739,7 @@
 <p>同时也可以通过lldb修改内存中的值</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">memory write 0x100400c68 6</span></pre></td></tr><tr><td class="code"><pre><span class="line">将_no的值改为了6</span></pre></td></tr></table></figure>
 
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-0f4104937adf7401.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/724/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1434508-0f4104937adf7401.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/724" alt="img02"></p>
 <blockquote>
 <p>那么一个NSObject对象占用多少内存？<br> <strong>NSObjcet实际上是只有一个名为isa的指针的结构体，因此占用一个指针变量所占用的内存空间大小，如果64bit占用8个字节，如果32bit占用4个字节。</strong></p>
 </blockquote>
@@ -752,8 +752,7 @@
 <p>这道面试题的实质是想问一个Person对象，一个Student对象分别占用多少内存空间？</p>
 </blockquote>
 <p>我们依据上面的分析与发现，类对象实质上是以结构体的形式存储在内存中，画出真正的内存图例</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-dded6a79a629de09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1056/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1434508-dded6a79a629de09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1056" alt="img03"></p>
 <p><strong>我们发现只要是继承自NSObject的对象，那么底层结构体内一定有一个isa指针。</strong><br> 那么他们所占的内存空间是多少呢？单纯的将指针和成员变量所占的内存相加即可吗？上述代码实际打印的内容是16 16，也就是说，person对象和student对象所占用的内存空间都为16个字节。<br> 其实实际上person对象确实只使用了12个字节。但是因为内存对齐的原因。使person对象也占用16个字节。</p>
 <blockquote>
 <p>编译器在给结构体开辟空间时，首先找到结构体中最宽的基本数据类型，然后寻找内存地址能是该基本数据类型的整倍的位置，作为结构体的首地址。将这个最宽的基本数据类型的大小作为对齐模数。<br> 为结构体的一个成员开辟空间之前，编译器首先检查预开辟空间的首地址相对于结构体首地址的偏移是否是本成员的整数倍，若是，则存放本成员，反之，则在本成员和上一个成员之间填充一定的字节，以达到整数倍的要求，也就是将预开辟空间的首地址后移几个字节。</p>
@@ -783,8 +782,7 @@
 <li>isa指针</li>
 <li>其他成员变量</li>
 </ol>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-c564b99ce9ba8c10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1083/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1434508-c564b99ce9ba8c10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1083" alt="截图000"></p>
 <blockquote>
 <p>衍生问题：在上图实例对象中根本没有看到方法，那么实例对象的方法的代码放在什么地方呢？那么类的方法的信息，协议的信息，属性的信息都存放在什么地方呢？</p>
 </blockquote>
@@ -799,8 +797,7 @@
 <li>类的属性信息（@property），类的成员变量信息（ivar）</li>
 <li>类的对象方法信息（instance method），类的协议信息（protocol）</li>
 </ol>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-c3527113c4cc1c08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/316/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1434508-c3527113c4cc1c08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/316" alt="截图001"></p>
 <p><strong>成员变量的值时存储在实例对象中的，因为只有当我们创建实例对象的时候才为成员变赋值。但是成员变量叫什么名字，是什么类型，只需要有一份就可以了。所以存储在class对象中。</strong></p>
 <p>类方法放在那里？<br> <strong>元类对象 meta-class</strong></p>
 <figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="comment">//runtime中传入类对象此时得到的就是元类对象</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">Class objectMetaClass = object_getClass([<span class="built_in">NSObject</span> <span class="keyword">class</span>]);</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">// 而调用类对象的class方法时得到还是类对象，无论调用多少次都是类对象</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">Class cls = [[<span class="built_in">NSObject</span> <span class="keyword">class</span>] <span class="keyword">class</span>];</span></pre></td></tr><tr><td class="code"><pre><span class="line">Class objectClass3 = [<span class="built_in">NSObject</span> <span class="keyword">class</span>];</span></pre></td></tr><tr><td class="code"><pre><span class="line">class_isMetaClass(objectMetaClass) <span class="comment">// 判断该对象是否为元类对象</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%p %p %p"</span>, objectMetaClass, objectClass3, cls); <span class="comment">// 后面两个地址相同，说明多次调用class得到的还是类对象</span></span></pre></td></tr></table></figure>
@@ -811,8 +808,7 @@
 <li>superclass指针</li>
 <li>类的类方法的信息（class method）</li>
 </ol>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-4aca671a18181443.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/328/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://i.loli.net/2019/12/19/iYVSogePXaKUbIJ.png" alt="截屏002.png"></p>
 <p><strong>meta-class对象和class对象的内存结构是一样的，所以meta-class中也有类的属性信息，类的对象方法信息等成员变量，但是其中的值可能是空的。</strong></p>
 <p><strong>对象的isa指针指向哪里</strong></p>
 <ol>
@@ -827,16 +823,14 @@
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Student studentClassMethod</span>];</span></pre></td></tr></table></figure>
 
 <p><strong>class的isa指向meta-class<br> 当调用类方法时，通过class的isa找到meta-class，最后找到类方法的实现进行调用</strong></p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-e71cf3850379fe21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1145/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://i.loli.net/2019/12/19/pvR63OFeMKITqLo.png" alt="截屏03.png"></p>
 <ol>
 <li>当对象调用其父类对象方法的时候，又是怎么找到父类对象方法的呢？，此时就需要使用到class类对象superclass指针。</li>
 </ol>
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">stu personMethod</span>];</span></pre></td></tr><tr><td class="code"><pre><span class="line">[<span class="meta">stu init</span>];</span></pre></td></tr></table></figure>
 
 <p><strong>当Student的instance对象要调用Person的对象方法时，会先通过isa找到Student的class，然后通过superclass找到Person的class，最后找到对象方法的实现进行调用，同样如果Person发现自己没有响应的对象方法，又会通过Person的superclass指针找到NSObject的class对象，去寻找响应的方法</strong></p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-c424291af118ebad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://i.loli.net/2019/12/19/ODS2wXjqhb85rmv.png" alt="截屏004.png"></p>
 <ol>
 <li>当类对象调用父类的类方法时，就需要先通过isa指针找到meta-class，然后通过superclass去寻找响应的方法</li>
 </ol>
@@ -844,8 +838,7 @@
 
 <p><strong>当Student的class要调用Person的类方法时，会先通过isa找到Student的meta-class，然后通过superclass找到Person的meta-class，最后找到类方法的实现进行调用</strong></p>
 <p>最后又是这张静定的isa指向图，经过上面的分析我们在来看这张图，就显得清晰明了很多。</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-49ba7d6446b3ded2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/449/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://i.loli.net/2019/12/19/yPxUod6C2NmKHnX.png" alt="截图005.png"></p>
 <blockquote>
 <p><strong>对isa、superclass总结</strong></p>
 <ol>
@@ -862,18 +855,14 @@
 <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">NSObject *<span class="keyword">object</span> = [[NSObject alloc] <span class="keyword">init</span>];</span></pre></td></tr><tr><td class="code"><pre><span class="line">Class objectClass = [NSObject <span class="class"><span class="keyword">class</span>];</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">Class objectMetaClass = object_getClass([NSObject <span class="class"><span class="keyword">class</span>]);</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">NSLog(@<span class="string">"%p %p %p"</span>, <span class="keyword">object</span>, objectClass, objectMetaClass);</span></pre></td></tr></table></figure>
 
 <p>打断点并通过控制台打印相应对象的isa指针</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-00e99ea5045212df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/407/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://i.loli.net/2019/12/19/enTfkyogZWPIMNA.png" alt="截屏006.png"></p>
 <p>我们发现object-&gt;isa与objectClass的地址不同，这是因为从64bit开始，isa需要进行一次位运算，才能计算出真实地址。而位运算的值我们可以通过下载<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fopensource.apple.com%2Ftarballs%2Fobjc4%2F" target="_blank" rel="noopener">objc源代码</a>找到。</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-276d3011130264db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/453/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://i.loli.net/2019/12/19/zMNu9jkfELBUZAO.png" alt="截屏007.png"></p>
 <p>我们通过位运算进行验证。</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-f2268e81904fb832.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/470/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://i.loli.net/2019/12/19/x9tQWhUYPmVOpB5.png" alt="截屏008.png"></p>
 <p>我们发现，object-isa指针地址0x001dffff96537141经过同0x00007ffffffffff8位运算，得出objectClass的地址0x00007fff96537140</p>
 <p>接着我们来验证class对象的isa指针是否同样需要位运算计算出meta-class对象的地址。<br> 当我们以同样的方式打印objectClass-&gt;isa指针时，发现无法打印</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-38ec0ad027ade31e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1046/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://i.loli.net/2019/12/19/laPigFN2v6p8yoU.png" alt="截屏009.png"></p>
 <p>同时也发现左边objectClass对象中并没有isa指针。我们来到Class内部看一下</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">objc_class</span> *<span class="title">Class</span>;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_class</span> &#123;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    Class _Nonnull isa  OBJC_ISA_AVAILABILITY;</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !__OBJC2__</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    Class _Nullable super_class                              OBJC2_UNAVAILABLE;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> * _Nonnull name                               OBJC2_UNAVAILABLE;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">long</span> version                                             OBJC2_UNAVAILABLE;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">long</span> info                                                OBJC2_UNAVAILABLE;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="keyword">long</span> instance_size                                       OBJC2_UNAVAILABLE;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_ivar_list</span> * _<span class="title">Nullable</span> <span class="title">ivars</span>                  <span class="title">OBJC2_UNAVAILABLE</span>;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_method_list</span> * _<span class="title">Nullable</span> * _<span class="title">Nullable</span> <span class="title">methodLists</span>                    <span class="title">OBJC2_UNAVAILABLE</span>;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_cache</span> * _<span class="title">Nonnull</span> <span class="title">cache</span>                       <span class="title">OBJC2_UNAVAILABLE</span>;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_protocol_list</span> * _<span class="title">Nullable</span> <span class="title">protocols</span>          <span class="title">OBJC2_UNAVAILABLE</span>;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125; OBJC2_UNAVAILABLE;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">/* Use `Class` instead of `struct objc_class *` */</span></span></pre></td></tr></table></figure>
 
@@ -881,10 +870,9 @@
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">xx_cc_objc_class</span></span>&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    Class isa;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;;</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">Class objectClass = [NSObject class];</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">xx_cc_objc_class</span></span> *objectClass2 = (__bridge <span class="class"><span class="keyword">struct</span> <span class="title">xx_cc_objc_class</span></span> *)(objectClass);</span></pre></td></tr></table></figure>
 
 <p>此时我们重新验证一下</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1434508-878ba6c819b229a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/499/format/webp" alt="img"></p>
-<p>image</p>
+<p><img src="https://i.loli.net/2019/12/19/HTSrNXtV2yoIOB6.png" alt="截屏010.png"></p>
 <p>确实，objectClass2的isa指针经过位运算之后的地址是meta-class的地址。</p>
-<h3 id="本文面试题总结："><a href="#本文面试题总结：" class="headerlink" title="本文面试题总结："></a>本文面试题总结：</h3><ol>
+<h3 id="本文总结："><a href="#本文总结：" class="headerlink" title="本文总结："></a>本文总结：</h3><ol>
 <li>一个NSObject对象占用多少内存？<br> 答：一个指针变量所占用的大小（64bit占8个字节，32bit占4个字节）</li>
 <li>对象的isa指针指向哪里？<br> 答：instance对象的isa指针指向class对象，class对象的isa指针指向meta-class对象，meta-class对象的isa指针指向基类的meta-class对象，基类自己的isa指针也指向自己。</li>
 <li>OC的类信息存放在哪里？<br> 答：成员变量的具体值存放在instance对象。对象方法，协议，属性，成员变量信息存放在class对象。类方法信息存放在meta-class对象。</li>
@@ -892,7 +880,7 @@
 <h3 id="底层原理相关文章："><a href="#底层原理相关文章：" class="headerlink" title="底层原理相关文章："></a>底层原理相关文章：</h3><p><a href="https://www.jianshu.com/notebooks/24110540" target="_blank" rel="noopener">iOS底层原理总结 - 文集</a></p>
 ]]></content>
       <categories>
-        <category>iOS</category>
+        <category>总结</category>
       </categories>
       <tags>
         <tag>OC</tag>

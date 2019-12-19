@@ -615,6 +615,55 @@
       </tags>
   </entry>
   <entry>
+    <title>property的属性</title>
+    <url>/2018/10/17/property%E5%B1%9E%E6%80%A7/</url>
+    <content><![CDATA[<p>学习iOS开发也已经半个月左右了，也尝试做简单的程序，但是遇到很多问题，总结下来就是：急于求成，总想着做一个东西出来，里面的东西也不懂，只知道把这个复制到代码中就OK了，现在发现基础很重要，所以在此对最基本的经常接触的合成存储器@property的weak nonatomic strong等属性总结一下：</p>
+<p><strong>@property @synthesize关键字</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;注意：其实就是用来替代setter和getter方法的。这两个关键字是编译器特性，让Xcode可以自动生成getter和setter的声明和实现。</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;property:属性;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;synthesize:合成;</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">@property与@synthesize是成对出对出现的，可以自动生成某个类成员变量的存取方法。</span></pre></td></tr><tr><td class="code"><pre><span class="line">在Xcode4.5以及以后的版本，@synthesize可以省略。</span></pre></td></tr></table></figure>
+
+<p><strong>@property是在头文件.h中声明一个变量的setter和getter方法</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@property int age;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;编译时遇到这一行，则自动扩展成下面两句：</span></pre></td></tr><tr><td class="code"><pre><span class="line">-(void)setAge:(int)Age;</span></pre></td></tr><tr><td class="code"><pre><span class="line">-(int)age;</span></pre></td></tr></table></figure>
+
+<p><strong>@synthesize是在m文件中定义setter和getter方法的实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@synthesize age&#x3D;_age;</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;相当于下面的代码：</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">-(void)setAge:(int)age</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">  _age&#x3D;age;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">-(int)age</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">  Return _age;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p><strong>//atomic:原子;</strong><br><strong>//nonatomic:非原子;</strong></p>
+<p><strong>1.atomic与nonatomic</strong><br><strong>atomic：</strong>默认是由该属性的，这个属性是为了保证程序在多线程情况，编译器会自动生成一些互斥加锁代码，避免该变量的读写不同步问题。</p>
+<p>如果有多个线程同时调用setter的话，不会出现某一个线程执行setter全部语句之前，另一个线程开始执行setter情况，相当于函数头尾加了锁一样。</p>
+<p><strong>nonatomic：</strong>如果该对象<strong>无需考虑多线程的情况</strong>，请加入这个属性，这样会让编译器少生成一些互斥加锁代码，可以提高效率。</p>
+<p><strong>2.readwrite(读写)与readonly(只读)</strong><br><strong>readwrite：</strong>这个属性是默认的情况，会自动为你生成存取器，既会生成getter方法，也会生成setter方法。<br><strong>readonly：</strong>只生成getter不会有setter方法。<br>readwrite、readonly这两个属性的真正价值，不是提供供成员变量访问接口，而是<strong>控制成员变量的访问权限</strong>。</p>
+<p><strong>3.strong(强引用)与weak(弱引用)</strong><br><strong>strong：</strong>强引用，也是我们通常说的引用，其存亡直接决定了所指向对象的存亡。如果不存在指向一个对象引用，<br>并且此对象不在显示在列表中，则此对象会被从内存中释放。<br><strong>weak：</strong>弱引用，不决定对象的存亡。即使一个对象被持有无数个弱引用，<strong>只要没有强引用指向它，那么还是会被清除。</strong><br>strong与retain功能相似；weak与assign相似，只是当对象消失后weak会自动把指针变为nil</p>
+<p><strong>//assign:分配</strong><br><strong>//retain:保留</strong></p>
+<p><strong>4.assign、copy、retain</strong><br><strong>assign：</strong>默认类型，setter方法直接赋值，不进行任何retain操作，不改变引用计数。一般用来处理基本数据类型。<br><strong>retain：</strong>释放旧的对象（release）,将旧对象的值赋给新对象，再令新对象引用技术为1。我理解为指针的拷贝，拷贝一份原来的指针，释放原来指针指向的对象内容，再令指针指向新的对象内容。<br><strong>copy：</strong>与retain处理流程一样，先对旧值release,再copy出新的对象，retainCount为1。为了减少对上下文的依赖而引入的机制。<br>我理解为内容的拷贝，向内存申请一块空间，把原来的对象内容赋给它，令其引用计数为1。对copy属性要特别注意：被定义有<br>copy属性的对象必须要符合NSCopying协议，必须实现-(id)copyWithZone:(NSZone*)zone方法。<br>也可以直接使用：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用assign: 对基础数据类型 （NSInteger，CGFloat）和C数据类型（int, float, double, char, 等等）</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">//使用copy： 对NSString</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">//使用retain： 对其他NSObject和其子类</span></span></pre></td></tr></table></figure>
+
+<p><strong>5.getter setter</strong><br>getter:是用来指定get方法的方法名<br>setter:是用来指定set访问的方法名<br>在@property的属性中，如果这个属性是一个BOOL值，通常我们可以用getter来定义一个自己喜欢的名字，<br>例如:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@property(nonatomic,assign,getter&#x3D;isValue) boolean value;</span></pre></td></tr><tr><td class="code"><pre><span class="line">@property(nonatomic,assign,setter&#x3D;setIsValue) boolean value;</span></pre></td></tr></table></figure>
+
+<h4 id="通俗理解retain、copy、assign区别"><a href="#通俗理解retain、copy、assign区别" class="headerlink" title="通俗理解retain、copy、assign区别"></a>通俗理解retain、copy、assign区别</h4><p>1.假设你用malloc分配了一块内存，并且把它的地址赋给了指针a，后来你希望指针b也共享这块内存，于是你又把a赋值给（assign)了b。<br>此时a和b指向同一块内存，请问当a不再需要这块内存，能否直接释放它？答案是否定的，因为a并不知道b是否还在使用这块内存，如果<br>a释放了，那么b在使用这块内存的时候会引起程序crash掉。</p>
+<p>2.了解到1中assign的问题，那么如何解决？最简单的一个方法就是使用引用计数（reference counting），还是上面的那个例子，我们给<br>那块内存设一个引用计数，当内存被分配并且赋值给a时，引用计数是1。当把a赋值给b时引用计数增加到2。这时如果a不再使用这块内存，<br>它只需要把引用计数减1，表明自己不再拥有这块内存。b不再使用这块内存时也把引用计数减1。当引用计数变为0的时候，代表该内存不再<br>被任何指针所引用，系统可以把它直接释放掉。</p>
+<p>3.上面两点其实就是assign和retain的区别，assign就是直接赋值，从而可能引起1中的问题，当数据为int，float等原生类型时，可以使用assign。<br>retain就如2中所述，使用了引用计数，retain引起引用计数加1，release引起引用技术减1，当引用计数为0时，dealloc函数被调用，内存被收回。</p>
+<p>4..atomic和nonatomic用来决定编译器的生成getter和setter是否为原子操作。在多线程环境下，原子操作是必要的，否则有可能引起错误结果。<br>加了atomic，setter函数会变成下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if(property !&#x3D; newValue)&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">  [property release];</span></pre></td></tr><tr><td class="code"><pre><span class="line">  property&#x3D;[newValue retain];</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h4 id="深入理解一下（包括autorelease）"><a href="#深入理解一下（包括autorelease）" class="headerlink" title="深入理解一下（包括autorelease）"></a>深入理解一下（包括autorelease）</h4><p><strong>1.retain之后count加1</strong></p>
+<p>alloc之后count就是1，release就会调用dealloc销毁这个对象<br>如果retain，需要release两次。通常在method中把参数赋给成员变量时需要retain.<br>例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;classA有setName这个方法：</span></pre></td></tr><tr><td class="code"><pre><span class="line">-(void)setName(ClassName *) inputName&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">  name&#x3D;inputName;</span></pre></td></tr><tr><td class="code"><pre><span class="line">  [name retain];</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;此处retain,等同于[inputName retain]，count等于2&#125;</span></pre></td></tr></table></figure>
+
+<p>调用时：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ClassName *myName&#x3D;[[ClassName alloc] init];</span></pre></td></tr><tr><td class="code"><pre><span class="line">[[classA setName:myName]; </span></pre></td></tr><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;retain count &#x3D;&#x3D; 2</span></pre></td></tr><tr><td class="code"><pre><span class="line">[myName release]; </span></pre></td></tr><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;retain count&#x3D;&#x3D;1，在ClassA的dealloc中release name才能真正释放内存</span></pre></td></tr></table></figure>
+
+<p> <strong>2、autorelease更加tricky，而且很容易被它的名字迷惑。强调注意：autorelease不是garbage collection</strong><br>完全不同于Java中的GC，autorelease和作用域没有任何关系！<br><strong>autorelease 原理：</strong><br>a.先建立一个autorelease pool<br>b.对象从这个autorelease pool里面生成<br>c.对象生成 之后调用autorelease函数，这个函数的作用仅仅是在autorelease pool中做个标记，让pool记得将来release一下这个对象<br>d.程序结束时，pool本身也需要rerlease, 此时pool会把每一个标记为autorelease的对象release一次<br>  如果某个对象此时retain count大于1，这个对象还是没有被销毁<br>上面这个例子应该这样写：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ClassName *myName &#x3D; [[[ClassName alloc] init] autorelease];</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;标记为autorelease</span></pre></td></tr><tr><td class="code"><pre><span class="line">[classA setName:myName]; </span></pre></td></tr><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;retain count &#x3D;&#x3D; 2</span></pre></td></tr><tr><td class="code"><pre><span class="line">[myName release]; </span></pre></td></tr><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;retain count&#x3D;&#x3D;1，注意，在ClassA的dealloc中不能release name，</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;否则release pool时会release这个retain count为0的对象，这是不对的</span></pre></td></tr></table></figure>
+
+<p> 记住一点：如果这个对象是你alloc或者new出来的，你就需要调用release<br>        如果使用autorelease，那么仅在发生过retain的时候release一次（让retain count始终为1）<br><strong>3、xcode 中的新标记 strong weak</strong><br>strong 用来修饰强引用的属性；对应以前retain</p>
+<p>weak 用来修饰弱引用的属性；对应以前的assign</p>
+]]></content>
+      <tags>
+        <tag>Objective-C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>iOS底层原理总结 - 探寻OC对象的本质</title>
     <url>/2018/07/17/iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E6%80%BB%E7%BB%93%20-%20%E6%8E%A2%E5%AF%BBOC%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%9C%AC%E8%B4%A8/</url>
     <content><![CDATA[<p>转载自：<a href="https://www.jianshu.com/p/91a9176851cd" target="_blank" rel="noopener">iOS底层原理总结</a></p>
